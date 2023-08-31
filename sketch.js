@@ -13,6 +13,7 @@ let painting = true;
 
 let imageGrid;
 
+let representationDiv;
 let representationText;
 
 function makeControls () {
@@ -35,6 +36,8 @@ function makeControls () {
   controlBitDepth.option('2', 2);
   controlBitDepth.option('3', 3);
   controlBitDepth.option('4', 4);
+  controlBitDepth.option('8', 8);
+  controlBitDepth.option('16', 16);
   controlBitDepth.changed(function () {
     bitDepth = controlBitDepth.value();
     controlColorPicker.draw();
@@ -135,7 +138,7 @@ function restartImage () {
   imageWidth = Number.parseInt(controlSizeW.value());
   imageHeight = Number.parseInt(controlSizeH.value());
   imageGrid = new ImageGrid(imageWidth, imageHeight, bitDepth);
-  representationText.position(10, imageGrid.y + imageGrid.h + 10)
+  representationDiv.position(10, imageGrid.y + imageGrid.h + 10)
 }
 
 function mouseClicked () {
@@ -151,7 +154,9 @@ function setup () {
   createCanvas(windowWidth, windowHeight);
   background(200);
   makeControls();
-  representationText = createDiv().style('word-break: break-all;');
+  representationDiv = createDiv();
+  createDiv('text representation:').parent(representationDiv);
+  representationText = createDiv().style('word-break: break-all;').parent(representationDiv);
   restartImage();
   noLoop();
 }
