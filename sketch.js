@@ -25,6 +25,7 @@ function makeControls () {
   controlSizeH.parent(line1);
   controlSizeW.size(15);
   controlSizeH.size(15);
+  createButton('restart').style('margin-left:15px').parent(line1).mouseClicked(restartImage);
 
   let line2 = createDiv();
   createSpan('bit depth: ').parent(line2);
@@ -95,7 +96,6 @@ function makeControls () {
       if(isMouseWithin(this)){
         selectedValue = this.getValueFromMouse();
         let c = this.getColor(selectedValue);
-        print('Setting color to', c);
         selectedColor = c;
         select('#valueDisplay').html(selectedValue);
       }
@@ -120,7 +120,6 @@ function makeControls () {
     mouseClicked: function () {
       if(isMouseWithin(this)){
         painting = !painting;
-        print('painting set to', painting);
         if (painting) {
           select('#paintingStatusDisplay').html('')
         } else {
@@ -130,6 +129,13 @@ function makeControls () {
     }
   }
   controlPaintingToggle.draw();
+}
+
+function restartImage () {
+  imageWidth = Number.parseInt(controlSizeW.value());
+  imageHeight = Number.parseInt(controlSizeH.value());
+  imageGrid = new ImageGrid(imageWidth, imageHeight, bitDepth);
+  representationText.position(10, imageGrid.y + imageGrid.h + 10)
 }
 
 function mouseClicked () {
@@ -143,8 +149,8 @@ function setup () {
   createCanvas(windowWidth, windowHeight);
   background(200);
   makeControls();
-  imageGrid = new ImageGrid(imageWidth, imageHeight, bitDepth);
-  representationText = createDiv().position(10, imageGrid.y + imageGrid.h + 10).style('word-break: break-all;');
+  representationText = createDiv().style('word-break: break-all;');
+  restartImage();
   noLoop();
 }
 
