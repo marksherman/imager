@@ -8,6 +8,7 @@ class ImageGrid {
     this.y = 75;
     this.w = this.imageWidth * this.cellSize;
     this.h = this.imageHeight * this.cellSize;
+    this.selected = {'selected': false}
 
     this.rows = [];
     for (let row = 0; row < this.imageHeight; row++) {
@@ -31,6 +32,16 @@ class ImageGrid {
       }
     }
     pop();
+
+    // find which cell is being hovered-over, if any
+    if(isMouseWithin(this)) {
+      this.selected.row = findMouseRow(this.y, this.h, this.imageHeight);
+      this.selected.col = findMouseCol(this.x, this.w, this.imageWidth);
+      this.selected.selected = true;
+    } else {
+      // mouse is not hovering here, select nothing
+      this.selected.selected = false;
+    }
   }
 
   paintPixel (row, col, color, value) {
@@ -47,10 +58,25 @@ class ImageGrid {
 
   getTextRepresentation () {
     let s = '';
-    s = s + `${this.imageWidth}x${this.imageHeight}x${this.colorDepth}:`
+    s = s + `${this.imageWidth}x${this.imageHeight}x${this.colorDepth}:`;
     for (let row = 0; row < this.imageHeight; row++) {
       for (let col = 0; col < this.imageWidth; col++) {
-        s = s + `${this.rows[row][col].value},`
+        s = s + `${this.rows[row][col].value},`;
+      }
+    }
+    return s;
+  }
+
+  getHtmlRepresentation () {
+    let s = '';
+    s = s + `${this.imageWidth}x${this.imageHeight}x${this.colorDepth}:`;
+    for (let row = 0; row < this.imageHeight; row++) {
+      for (let col = 0; col < this.imageWidth; col++) {
+        if (this.selected.selected && row == this.selected.row && col == this.selected.col) {
+          s = s + `<span class="selected">${this.rows[row][col].value}</span>,`
+        } else {
+          s = s + `${this.rows[row][col].value},`;
+        }
       }
     }
     return s;

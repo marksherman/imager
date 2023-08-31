@@ -141,7 +141,9 @@ function restartImage () {
 function mouseClicked () {
   controlColorPicker.mouseClicked();
   controlPaintingToggle.mouseClicked();
-  imageGrid.paintByMouse(selectedColor, selectedValue);
+  if(painting == true) {
+    imageGrid.paintByMouse(selectedColor, selectedValue);
+  }
   redraw();
 }
 
@@ -161,5 +163,5 @@ function mouseMoved () {
 function draw () {
   controlColorPicker.draw();
   imageGrid.draw();
-  representationText.html(imageGrid.getTextRepresentation());
+  representationText.html(imageGrid.getHtmlRepresentation());
 }
