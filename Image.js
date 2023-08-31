@@ -44,4 +44,15 @@ class ImageGrid {
       this.paintPixel(mouseRow, mouseCol, color, value);
     }
   }
+
+  getTextRepresentation () {
+    let s = '';
+    s = s + `${this.imageWidth}x${this.imageHeight}x${this.colorDepth}:`
+    for (let row = 0; row < this.imageHeight; row++) {
+      for (let col = 0; col < this.imageWidth; col++) {
+        s = s + `${this.rows[row][col].value},`
+      }
+    }
+    return s;
+  }
 }

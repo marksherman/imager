@@ -13,6 +13,8 @@ let painting = true;
 
 let imageGrid;
 
+let representationText;
+
 function makeControls () {
   let line1 = createDiv();
   createSpan('image size: ').parent(line1);
@@ -142,6 +144,7 @@ function setup () {
   background(200);
   makeControls();
   imageGrid = new ImageGrid(imageWidth, imageHeight, bitDepth);
+  representationText = createDiv().position(10, imageGrid.y + imageGrid.h + 10).style('word-break: break-all;');
   noLoop();
 }
 
@@ -152,4 +155,5 @@ function mouseMoved () {
 function draw () {
   controlColorPicker.draw();
   imageGrid.draw();
+  representationText.html(imageGrid.getTextRepresentation());
 }
