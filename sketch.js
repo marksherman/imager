@@ -59,7 +59,7 @@ function makeControls () {
     getValueFromMouse: function () {
       // returns the value (cell number) of the color: 0 through cellCount -1
       // only valid if mouse is within the bounds of the color picker
-      return floor(map(mouseX - this.x, 0, this.w, 0, this.cellCount));
+      return findMouseCol(this.x, this.w, this.cellCount);
     },
     getColor: function (cell) {
       // given a value, find the right shade. 

@@ -39,8 +39,8 @@ class ImageGrid {
 
   paintByMouse (color, value) {
     if(isMouseWithin(this)) {
-      let mouseRow = floor(map(mouseY - this.y, 0, this.h, 0, this.imageHeight));
-      let mouseCol = floor(map(mouseX - this.x, 0, this.w, 0, this.imageWidth));
+      let mouseRow = findMouseRow(this.y, this.h, this.imageHeight);
+      let mouseCol = findMouseCol(this.x, this.w, this.imageWidth);
       this.paintPixel(mouseRow, mouseCol, color, value);
     }
   }
