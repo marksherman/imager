@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "ms-vscode-remote.remote-containers",
+        "acidic9.p5js-snippets",
+        "ms-vscode.live-server"
+    ]
+}
