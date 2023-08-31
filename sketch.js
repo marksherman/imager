@@ -8,18 +8,10 @@ let imageWidth = 10;
 let imageHeight = 10;
 let bitDepth = 1;
 let selectedColor = 0;
+let selectedValue = 0;
 let painting = true;
 
-// pass 'this' as obj
-function isMouseWithin (obj) {
-  if(mouseX > obj.x && mouseY > obj.y &&
-     mouseX < obj.x + obj.w && mouseY < obj.y + obj.h) { 
-      return true 
-  }
-  else { 
-    return false 
-  }
-}
+let imageGrid;
 
 function makeControls () {
   let line1 = createDiv();
@@ -61,7 +53,6 @@ function makeControls () {
     h: 18,
     cellCount: 4,
     cellWidth: 50,
-    value: 0,
     getValueFromMouse: function () {
       // returns the value (cell number) of the color: 0 through cellCount -1
       // only valid if mouse is within the bounds of the color picker
@@ -90,7 +81,7 @@ function makeControls () {
         fill(this.getColor(i));
         rect(this.x + i * this.cellWidth, this.y, this.cellWidth, this.h);
       }
-      select('#valueDisplay').html(this.value);
+      select('#valueDisplay').html(selectedValue);
       if(isMouseWithin(this)){
         select('#hoverValue').html(` → ${this.getValueFromMouse()}`);
       } else {
@@ -100,11 +91,11 @@ function makeControls () {
     },
     mouseClicked: function () {
       if(isMouseWithin(this)){
-        this.value = this.getValueFromMouse();
-        let c = this.getColor(this.value);
+        selectedValue = this.getValueFromMouse();
+        let c = this.getColor(selectedValue);
         print('Setting color to', c);
         selectedColor = c;
-        select('#valueDisplay').html(this.value);
+        select('#valueDisplay').html(selectedValue);
       }
     }
   }
@@ -142,14 +133,15 @@ function makeControls () {
 function mouseClicked () {
   controlColorPicker.mouseClicked();
   controlPaintingToggle.mouseClicked();
+  imageGrid.paintByMouse(selectedColor, selectedValue);
   redraw();
 }
 
 function setup () {
-  createCanvas(500, 500);
+  createCanvas(windowWidth, windowHeight);
   background(200);
-  // create config header for image editor
   makeControls();
+  imageGrid = new ImageGrid(imageWidth, imageHeight, bitDepth);
   noLoop();
 }
 
@@ -159,4 +151,5 @@ function mouseMoved () {
 
 function draw () {
   controlColorPicker.draw();
+  imageGrid.draw();
 }
