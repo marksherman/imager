@@ -151,7 +151,7 @@ function mouseClicked () {
 }
 
 function setup () {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight - 25);
   background(200);
   makeControls();
   representationDiv = createDiv();
